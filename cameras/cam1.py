@@ -16,7 +16,7 @@ def main():
             break
         img = cv2.imencode('.jpg', img)[1].tobytes()
         publisher.send_multipart([b"CAM1", img])
-        print(f'[CAM1]: sent frame')
+        # print(f'[CAM1]: sent frame')
 
     # We never get here but clean up anyhow
     publisher.close()
