@@ -1,0 +1,14 @@
+{
+    "ports" : {
+        "camera_router" : {
+            "CAM_IN": 5559,
+            "CAM_OUT": 5560
+        },
+        "nn_result_router" : {
+            "NN_IN_JSON": 5561,
+            "NN_IN_IMG": 5563,
+            "NN_OUT_JSON": 5562,
+            "NN_OUT_IMG": 5564
+        }
+    }
+}
