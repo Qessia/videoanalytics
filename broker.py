@@ -10,6 +10,8 @@ def main():
     subscriber = context.socket(zmq.SUB)
     subscriber.connect("tcp://localhost:5559")
     subscriber.connect("tcp://localhost:5560")
+    subscriber.connect("tcp://localhost:5558")
+    subscriber.connect("tcp://localhost:5557")
     subscriber.setsockopt(zmq.SUBSCRIBE, b"")
 
     publisher = context.socket(zmq.PUB)

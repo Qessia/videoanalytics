@@ -15,7 +15,7 @@ def main():
     context = zmq.Context()
     subscriber = context.socket(zmq.SUB)
     subscriber.connect("tcp://localhost:5561")
-    subscriber.setsockopt(zmq.SUBSCRIBE, b"BROKER")
+    subscriber.setsockopt(zmq.SUBSCRIBE, b"")
 
     pusher = context.socket(zmq.PUSH)
     pusher.connect("tcp://localhost:5562")
