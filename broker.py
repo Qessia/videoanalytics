@@ -5,7 +5,7 @@ import cv2
 
 def main():
 
-    # Prepare our context and publisher
+    # Prepare our context and router
     context = zmq.Context()
     subscriber = context.socket(zmq.SUB)
     subscriber.connect("tcp://localhost:5559")
@@ -14,12 +14,16 @@ def main():
     subscriber.connect("tcp://localhost:5557")
     subscriber.setsockopt(zmq.SUBSCRIBE, b"")
 
-    publisher = context.socket(zmq.PUB)
-    publisher.bind("tcp://0.0.0.0:5561")
+    router = context.socket(zmq.ROUTER)
+    router.bind("tcp://0.0.0.0:5561")
 
+    rr_step = 0
     while True:
+        ident = [b'W0', b'W1'][rr_step]
         [address, contents] = subscriber.recv_multipart()
-        publisher.send_multipart([address, contents])
+        router.send_multipart([ident, address, contents])
+
+        rr_step = (rr_step + 1) % 2
     
 
     # We never get here but clean up anyhow
