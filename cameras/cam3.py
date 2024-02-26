@@ -5,16 +5,16 @@ import cv2
 def main():
     context = zmq.Context()
     publisher = context.socket(zmq.PUB)
-    publisher.bind("tcp://0.0.0.0:5560")
+    publisher.bind("tcp://0.0.0.0:5558")
 
-    cap = cv2.VideoCapture('videos/oilstation.mp4')
+    cap = cv2.VideoCapture('videos/alumin.mp4')
 
     while True:
         success, img = cap.read()
         if not success:
             break
         img = cv2.imencode('.jpg', img)[1].tobytes()
-        publisher.send_multipart([b"2", img])
+        publisher.send_multipart([b"3", img])
         # print(f'[CAM2]: sent frame')
 
     # We never get here but clean up anyhow
