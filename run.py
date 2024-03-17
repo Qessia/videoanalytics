@@ -3,7 +3,7 @@ from multiprocessing import Process
 
 from cameras import (cam0, cam1, cam2, cam3)
 import broker
-import worker1
+from workers import (worker0, worker1)
 import gui
 
 if __name__ == "__main__":
@@ -13,10 +13,12 @@ if __name__ == "__main__":
     cam3_process = Process(target=cam3.main)
     
     broker_process = Process(target=broker.main)
+    worker0_process = Process(target=worker0.main)
     worker1_process = Process(target=worker1.main)
     gui_process = Process(target=gui.main)
 
     gui_process.start()
+    worker0_process.start()
     worker1_process.start()
     broker_process.start()
 
