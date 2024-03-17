@@ -10,7 +10,7 @@ def main():
     if torch.cuda.is_available():
         torch.cuda.set_device(0)
 
-    model = YOLO('models/yolov8n.pt')  # pretrained YOLOv8n model
+    model = YOLO('models/forklift_9s.pt')  # pretrained YOLOv8n model
     # Prepare our context and publisher
     context = zmq.Context()
     dealer = context.socket(zmq.DEALER)

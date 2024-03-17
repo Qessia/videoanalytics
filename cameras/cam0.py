@@ -7,8 +7,7 @@ def main():
     publisher = context.socket(zmq.PUB)
     publisher.bind("tcp://0.0.0.0:5557")
 
-    cap = cv2.VideoCapture('videos/robbery.mp4')
-
+    cap = cv2.VideoCapture('videos/forklift1.mp4')
     while True:
         success, img = cap.read()
         if not success:
