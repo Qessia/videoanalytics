@@ -6,6 +6,7 @@ def main():
     context = zmq.Context()
     publisher = context.socket(zmq.PUB)
     publisher.bind("tcp://0.0.0.0:5557")
+    # publisher.setsockopt(zmq.SNDHWM, 1)
 
     cap = cv2.VideoCapture('videos/forklift1.mp4')
     while True:
