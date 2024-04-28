@@ -13,15 +13,14 @@ def main():
     model = YOLO('models/forklift_8s.pt')  # pretrained YOLOv8n model
     # Prepare our context and publisher
     context = zmq.Context()
-    dealer = context.socket(zmq.DEALER)
-    dealer.setsockopt(zmq.IDENTITY, b'W0')
-    dealer.connect("tcp://localhost:5561")
+    puller = context.socket(zmq.PULL)
+    puller.connect("tcp://localhost:5561")
 
     pusher = context.socket(zmq.PUSH)
     pusher.connect("tcp://localhost:5562")
 
     while True:
-        [address, contents] = dealer.recv_multipart()
+        [address, contents] = puller.recv_multipart()
 
         encoded_frame = np.frombuffer(contents, dtype=np.uint8)
         frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)
@@ -29,11 +28,13 @@ def main():
         result = model(frame)[0]  # return a list of Results objects
         result = result.tojson()
 
-        pusher.send_multipart([address, contents, result.encode()])
+        data = [address, contents, result.encode()]
+        pusher.send_multipart(data)
+        print(data[0])
     
 
     # We never get here but clean up anyhow
-    dealer.close()
+    pusher.close()
     context.term()
 
 

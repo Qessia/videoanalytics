@@ -2,7 +2,7 @@ import zmq
 import cv2
 from typing import List
 from multiprocessing import Process
-
+import json
 
 def start_source(id, source: dict):
     context = zmq.Context()
@@ -15,7 +15,7 @@ def start_source(id, source: dict):
             break
         img = cv2.imencode('.jpg', img)[1].tobytes()
         publisher.send_multipart([id.to_bytes(2, 'big'), img])
-        print(id)
+
     publisher.close()
     context.term()
 
@@ -29,26 +29,8 @@ def run(sources: List[dict]):
         process.start()
 
 
-def main():
-    sources = [
-        {
-            'port': 'tcp://0.0.0.0:5557',
-            'path': '../videos/forklift1.mp4',
-        },
-        {
-            'port': 'tcp://0.0.0.0:5559',
-            'path': '../videos/forklift2.mp4',
-        },
-        {
-            'port': 'tcp://0.0.0.0:5560',
-            'path': '../videos/oilstation.mp4',
-        },
-        {
-            'port': 'tcp://0.0.0.0:5558',
-            'path': '../videos/alumin.mp4',
-        }
-    ]
-    run(sources)
+def main(config):
+    run(config['sources'])
 
 
 if __name__ == "__main__":

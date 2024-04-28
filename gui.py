@@ -33,14 +33,15 @@ def main():
     # Prepare our context and publisher
     context = zmq.Context()
     puller = context.socket(zmq.PULL)
-    puller.bind("tcp://*:5562")
-
+    puller.bind("tcp://0.0.0.0:5562")
+    print('GUI')
     gui = GUI()
 
     while True:
         addr, img, dets = puller.recv_multipart()
+        print(addr, dets)
+        addr = int.from_bytes(addr)
 
-        addr = int(addr.decode())
         img = cv2.imdecode(np.frombuffer(img, dtype=np.uint8), cv2.IMREAD_COLOR)
         dets = json.loads(dets.decode())
         
@@ -56,7 +57,6 @@ def main():
         gui.update_cell(addr, img)
         
         cv2.imshow('Image', gui.canvas)
-        cv2.waitKey(10)
         if cv2.waitKey(10) & 0xFF == 27:
             cv2.destroyAllWindows()
             break

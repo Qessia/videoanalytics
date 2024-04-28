@@ -10,5 +10,24 @@
             "NN_OUT_JSON": 5562,
             "NN_OUT_IMG": 5564
         }
+    },
+    "sources":
+    [
+    {
+        "port": "tcp://0.0.0.0:5557",
+        "path": "./videos/forklift1.mp4"
+    },
+    {
+        "port": "tcp://0.0.0.0:5559",
+        "path": "./videos/forklift2.mp4"
+    },
+    {
+        "port": "tcp://0.0.0.0:5560",
+        "path": "./videos/oilstation.mp4"
+    },
+    {
+        "port": "tcp://0.0.0.0:5558",
+        "path": "./videos/alumin.mp4"
     }
+]
 }
