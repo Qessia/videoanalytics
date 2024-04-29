@@ -14,10 +14,10 @@ def main():
     # Prepare our context and publisher
     context = zmq.Context()
     puller = context.socket(zmq.PULL)
-    puller.connect("tcp://localhost:5561")
+    puller.bind("tcp://127.0.0.1:5563")
 
     pusher = context.socket(zmq.PUSH)
-    pusher.connect("tcp://localhost:5562")
+    pusher.connect("tcp://127.0.0.1:5562")
 
     while True:
         [address, contents] = puller.recv_multipart()

@@ -17,19 +17,20 @@ def main():
     # subscriber.setsockopt(zmq.RCVHWM, 1)
     subscriber.setsockopt(zmq.SUBSCRIBE, b"")
 
-    router = context.socket(zmq.PUSH)
-    router.bind("tcp://0.0.0.0:5561")
+    worker0 = context.socket(zmq.PUSH)
+    worker0.connect("tcp://127.0.0.1:5561")
 
-    rr_step = 0
-    vid_step = 0
+    worker1 = context.socket(zmq.PUSH)
+    worker1.connect("tcp://127.0.0.1:5563")
+
+    balance = 0
     while True:
-        # ident = b'W0'
-        address = [b'0', b'1', b'2', b'3'][vid_step]
-        
         [address, contents] = subscriber.recv_multipart()
-        router.send_multipart([address, contents])
 
-        vid_step = (vid_step + 1) % 4
+        if balance % 2 == 0:
+            worker0.send_multipart([address, contents])
+        else:
+            worker1.send_multipart([address, contents])
     
 
     # We never get here but clean up anyhow
