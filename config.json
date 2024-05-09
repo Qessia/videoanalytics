@@ -1,0 +1,36 @@
+{
+    "sources": [
+        {
+            "port": "tcp://127.0.0.1:5557",
+            "path": "./videos/forklift1.mp4",
+            "meanframe": "./videos/forklift1_meanframe.jpg"
+        },
+        {
+            "port": "tcp://127.0.0.1:5559",
+            "path": "./videos/forklift2.mp4",
+            "meanframe": "./videos/forklift2_meanframe.jpg"
+        },
+        {
+            "port": "tcp://127.0.0.1:5560",
+            "path": "./videos/workshop.mp4",
+            "meanframe": "./videos/workshop_meanframe.jpg"
+        },
+        {
+            "port": "tcp://127.0.0.1:5558",
+            "path": "./videos/alumin.mp4",
+            "meanframe": "./videos/alumin_meanframe.jpg"
+        }
+    ],
+    "workers": [
+        "tcp://127.0.0.1:5561",
+        "tcp://127.0.0.1:5563",
+        "tcp://127.0.0.1:5564",
+        "tcp://127.0.0.1:5565"
+    ],
+    "models": {
+        "fire": "./models/fire.pt",
+        "forklift": "./models/forklift_8s.pt"
+    },
+    "gui": "tcp://127.0.0.1:5562",
+    "psnr_threshold": 25
+}
