@@ -1,42 +1,26 @@
 import zmq
-import numpy as np
-import cv2
+from config import config
 
 
 def main():
-
     # Prepare our context and router
     context = zmq.Context()
 
-    # subs = [context.socket(zmq.SUB)]
     subscriber = context.socket(zmq.SUB)
-    subscriber.connect("tcp://localhost:5559")
-    subscriber.connect("tcp://localhost:5560")
-    subscriber.connect("tcp://localhost:5558")
-    subscriber.connect("tcp://localhost:5557")
-    # subscriber.setsockopt(zmq.RCVHWM, 1)
+    for s in config['sources']:
+        subscriber.connect(s['port'])
     subscriber.setsockopt(zmq.SUBSCRIBE, b"")
 
-    worker0 = context.socket(zmq.PUSH)
-    worker0.connect("tcp://127.0.0.1:5561")
+    workers = []
+    for w in config['workers']:
+        worker = context.socket(zmq.PUSH)
+        worker.connect(w)
+        workers.append(worker)
 
-    worker1 = context.socket(zmq.PUSH)
-    worker1.connect("tcp://127.0.0.1:5563")
-
-    balance = 0
     while True:
         [address, contents] = subscriber.recv_multipart()
-
-        if balance % 2 == 0:
-            worker0.send_multipart([address, contents])
-        else:
-            worker1.send_multipart([address, contents])
+        workers[int.from_bytes(address)].send_multipart([address, contents])
     
-
     # We never get here but clean up anyhow
     subscriber.close()
     context.term()
-
-
-if __name__ == "__main__":
-    main()
