@@ -1,5 +1,6 @@
 pyzmq==25.1.2
 opencv-python==4.9.0.80
 numpy==1.26.4
-# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-ultralytics 8.1.18
+ultralytics==8.1.18
+scikit-image==0.23.2
+torch

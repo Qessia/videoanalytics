@@ -162,3 +162,5 @@ cython_debug/
 *.pt
 *.mp4
 training/
+*.jpg
+psnr.md
