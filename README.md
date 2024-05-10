@@ -14,7 +14,7 @@ This project is about videosources emergency detection made with ZeroMQ infrastr
 - Torch with CUDA
 - Python3.12
 
-## Usage
+## Preparations
 
 - `pip install -r requirements.txt`
 - Download all necessary files from [Google Drive](https://drive.google.com/drive/u/0/folders/1OI_XtRNcwbm-JvojeKGR_x1SE1GuonQq) :
@@ -26,10 +26,19 @@ Notes:
 > meanframes must have same resolution as original videos, '.jpg' hardcoded <BR>
 > meanframes were created on "normal" parts of videos with `psnr.py`
 
-Usage (`Ctrl+C` to stop):
+## Meanframes for PSNR on custom videos
+Create meanframes for PSNR function:
+- Prepare "normal" videofragment (not containing emergency situations) in video editor
+- Use `psnr.py`:
+    - `python psnr.py <videopath>`
+- Meanframe will be created in same directory with same filename in '.jpg' format
+
+## Usage
+After you've set up config.json, just:
 ```bash
 python run.py
 ```
+`Ctrl+C` to stop
 
 ## TODOs
 - create meanframes automatically

@@ -2,9 +2,17 @@ import cv2
 import numpy as np
 from skimage.metrics import peak_signal_noise_ratio
 import matplotlib.pyplot as plt
+import argparse
+import sys
 
 
 def get_meanframe(normal_videopath, meanframe_path):
+    """Creates meanframe of video
+
+    Args:
+        normal_videopath (str): path of "normal" video
+        meanframe_path (str): path to save meanframe to
+    """
     before = cv2.VideoCapture(normal_videopath)
     success, img = before.read()
     frames = 0
@@ -22,11 +30,13 @@ def get_meanframe(normal_videopath, meanframe_path):
     
     cv2.imwrite(meanframe_path, avg)
 
+def plot_psnr(meanframe_path, video_path):
+    """Plot PSNR plot (X axis - frames, Y axis - PSNR in dB)
 
-def main():
-    meanframe_path = './videos/alumin_meanframe.jpg'
-    video_path = './videos/alumin.mp4'
-
+    Args:
+        meanframe_path (str): destination of meanframe in .jpg format
+        video_path (str): destination of video with emergency situation
+    """
     meanframe = cv2.imread(meanframe_path)
 
     PSNR = []
@@ -42,6 +52,19 @@ def main():
 
     plt.plot(PSNR)
     plt.show()
+
+
+def main():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('videopath', type=str, help='path of "normal" video')
+
+    try:
+        args = parser.parse_args()
+        get_meanframe(args.videopath, args.videopath[:-4] + '_meanframe.jpg')
+    except:
+        parser.print_help()
+        sys.exit(0)
 
 
 if __name__ == '__main__':
