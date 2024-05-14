@@ -47,3 +47,6 @@ python run.py
 - Ctrl+C handler
 - Auto scale processes
 - Test on realtime videosources
+
+## Example
+![example](./media/example_videoanalytics.gif)

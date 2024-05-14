@@ -55,6 +55,8 @@ def main():
         
         isFire = False
         for d in dets:
+            # if d['name'] == 'forklift' and addr == 2:
+            #     continue
             print(f'CONFIDENCE {d['confidence']} CLASS {d['name']}')
             x1 = int(d['box']['x1'])
             y1 = int(d['box']['y1'])
